@@ -16,7 +16,6 @@
   }
   .container { max-width: 960px; margin: 0 auto; padding: 48px 24px; }
 
-  /* Header */
   .header {
     border-bottom: 2px solid #f59e0b;
     padding-bottom: 20px;
@@ -43,7 +42,6 @@
     font-family: 'JetBrains Mono', monospace;
   }
 
-  /* Cards grid */
   .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -64,15 +62,8 @@
     position: relative;
     overflow: hidden;
   }
-  .card:hover {
-    border-color: #f59e0b;
-    background: #131a27;
-  }
-  .card-accent {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-  }
+  .card:hover { border-color: #f59e0b; background: #131a27; }
+  .card-accent { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
   .card-accent.amber { background: #f59e0b; }
   .card-accent.cyan  { background: #06b6d4; }
   .card-type {
@@ -82,16 +73,8 @@
     text-transform: uppercase;
     color: #64748b;
   }
-  .card h2 {
-    font-size: 18px;
-    font-weight: 700;
-    color: #f1f5f9;
-  }
-  .card p {
-    font-size: 13px;
-    color: #94a3b8;
-    line-height: 1.6;
-  }
+  .card h2 { font-size: 18px; font-weight: 700; color: #f1f5f9; }
+  .card p { font-size: 13px; color: #94a3b8; line-height: 1.6; }
   .card-arrow {
     margin-top: auto;
     font-size: 12px;
@@ -99,7 +82,6 @@
     color: #f59e0b;
   }
 
-  /* Archive section */
   .section-label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
@@ -108,11 +90,7 @@
     color: #475569;
     margin-bottom: 16px;
   }
-  .archive-list {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
+  .archive-list { display: flex; flex-direction: column; gap: 4px; }
   .archive-item {
     display: flex;
     align-items: center;
@@ -126,9 +104,7 @@
     font-size: 13px;
     transition: border-color 0.15s;
   }
-  .archive-item:hover {
-    border-color: #334155;
-  }
+  .archive-item:hover { border-color: #334155; }
   .archive-date {
     font-family: 'JetBrains Mono', monospace;
     color: #06b6d4;
@@ -142,8 +118,14 @@
     padding: 2px 8px;
     border-radius: 3px;
   }
+  .archive-empty {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #334155;
+    padding: 16px;
+    text-align: center;
+  }
 
-  /* Footer */
   .footer {
     margin-top: 48px;
     padding-top: 20px;
@@ -157,7 +139,6 @@
     gap: 8px;
   }
 
-  /* Live dot */
   .live-dot {
     display: inline-block;
     width: 7px;
@@ -177,14 +158,12 @@
 <body>
 <div class="container">
 
-  <!-- Header -->
   <div class="header">
     <div class="header-label">Gulf War Room</div>
     <h1>Regional Intelligence Hub</h1>
     <div class="header-sub" id="ts"></div>
   </div>
 
-  <!-- Main cards -->
   <div class="cards">
     <a class="card" href="gulf-risk-dashboard.html">
       <div class="card-accent cyan"></div>
@@ -194,47 +173,90 @@
       <div class="card-arrow">Open dashboard &rarr;</div>
     </a>
 
-    <a class="card" href="gulf-briefing-<TODAY>.html" id="briefing-link">
+    <a class="card" href="#" id="briefing-link">
       <div class="card-accent amber"></div>
       <div class="card-type">Daily Briefing</div>
       <h2>War Room Briefing</h2>
-      <p>Threat level, key metrics, diplomacy, oil infrastructure risk, shipping status, proxy activity, and the 72-hour outlook.</p>
+      <p id="briefing-desc">Threat level, key metrics, diplomacy, oil infrastructure risk, shipping status, proxy activity, and the 72-hour outlook.</p>
       <div class="card-arrow">Read today's briefing &rarr;</div>
     </a>
   </div>
 
-  <!-- Archive -->
   <div class="section-label">Briefing Archive</div>
   <div class="archive-list" id="archive">
-    <a class="archive-item" href="gulf-briefing-2026-03-23.html">
-      <span class="archive-date">2026-03-23</span>
-      <span>Gulf War Room Briefing</span>
-      <span class="archive-tag">DAY 18</span>
-    </a>
+    <div class="archive-empty">Loading archive...</div>
   </div>
 
-  <!-- Footer -->
   <div class="footer">
-    <span>GULF WAR ROOM &mdash; NAVTEC MARINE SERVICES</span>
+    <span>GULF WAR ROOM : NAVTEC MARINE SERVICES</span>
     <span id="next-update"></span>
   </div>
 
 </div>
 
 <script>
-  // Set timestamp
-  const now = new Date();
   const pad = n => String(n).padStart(2, '0');
-  const dateStr = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
-  const timeStr = `${pad(now.getHours())}:${pad(now.getMinutes())} GST`;
 
-  document.getElementById('ts').textContent = `Last updated: ${dateStr} ${timeStr}`;
+  // Current time in GST (UTC+4)
+  const now = new Date();
+  const gstOffset = 4 * 60;
+  const gstNow = new Date(now.getTime() + (gstOffset + now.getTimezoneOffset()) * 60000);
+
+  const todayStr = `${gstNow.getFullYear()}-${pad(gstNow.getMonth()+1)}-${pad(gstNow.getDate())}`;
+  const timeStr  = `${pad(gstNow.getHours())}:${pad(gstNow.getMinutes())} GST`;
+
+  document.getElementById('ts').textContent = `Last updated: ${todayStr} ${timeStr}`;
+
+  // Next update: tomorrow at 06:00 GST
+  const tomorrow = new Date(gstNow);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const tomorrowStr = `${tomorrow.getFullYear()}-${pad(tomorrow.getMonth()+1)}-${pad(tomorrow.getDate())}`;
+  document.getElementById('next-update').textContent = `NEXT UPDATE: ${tomorrowStr} 06:00 GST`;
 
   // Point today's briefing card to correct file
-  document.getElementById('briefing-link').href = `gulf-briefing-${dateStr}.html`;
+  document.getElementById('briefing-link').href = `gulf-briefing-${todayStr}.html`;
 
-  // Next update (06:00 GST next day)
-  document.getElementById('next-update').textContent = `NEXT UPDATE: ${dateStr} 06:00 GST`;
+  // Load archive from briefings.json
+  fetch(`briefings.json?v=${Date.now()}`)
+    .then(r => r.json())
+    .then(entries => {
+      // Sort newest first
+      entries.sort((a, b) => b.date.localeCompare(a.date));
+
+      const archiveEl = document.getElementById('archive');
+      archiveEl.innerHTML = '';
+
+      if (!entries.length) {
+        archiveEl.innerHTML = '<div class="archive-empty">No briefings yet.</div>';
+        return;
+      }
+
+      entries.forEach(entry => {
+        const a = document.createElement('a');
+        a.className = 'archive-item';
+        a.href = `gulf-briefing-${entry.date}.html`;
+
+        const dateSpan = document.createElement('span');
+        dateSpan.className = 'archive-date';
+        dateSpan.textContent = entry.date;
+
+        const labelSpan = document.createElement('span');
+        labelSpan.textContent = 'Gulf War Room Briefing';
+
+        const tagSpan = document.createElement('span');
+        tagSpan.className = 'archive-tag';
+        tagSpan.textContent = `DAY ${entry.day}`;
+
+        a.appendChild(dateSpan);
+        a.appendChild(labelSpan);
+        a.appendChild(tagSpan);
+        archiveEl.appendChild(a);
+      });
+    })
+    .catch(() => {
+      document.getElementById('archive').innerHTML =
+        '<div class="archive-empty">Archive unavailable.</div>';
+    });
 </script>
 </body>
 </html>
