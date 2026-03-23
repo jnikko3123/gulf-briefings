@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gulf War Room | Briefings Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0a0e17;
+    color: #e2e8f0;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .container { max-width: 960px; margin: 0 auto; padding: 48px 24px; }
+
+  /* Header */
+  .header {
+    border-bottom: 2px solid #f59e0b;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+  }
+  .header-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #f59e0b;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #f1f5f9;
+    letter-spacing: -0.5px;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Cards grid */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .card {
+    background: #0f1623;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 28px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    border-color: #f59e0b;
+    background: #131a27;
+  }
+  .card-accent {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .card-accent.amber { background: #f59e0b; }
+  .card-accent.cyan  { background: #06b6d4; }
+  .card-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #64748b;
+  }
+  .card h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #f1f5f9;
+  }
+  .card p {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.6;
+  }
+  .card-arrow {
+    margin-top: auto;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: #f59e0b;
+  }
+
+  /* Archive section */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #475569;
+    margin-bottom: 16px;
+  }
+  .archive-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .archive-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #0f1623;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #e2e8f0;
+    font-size: 13px;
+    transition: border-color 0.15s;
+  }
+  .archive-item:hover {
+    border-color: #334155;
+  }
+  .archive-date {
+    font-family: 'JetBrains Mono', monospace;
+    color: #06b6d4;
+    font-size: 12px;
+  }
+  .archive-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: #475569;
+    background: #1e293b;
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid #1e293b;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #334155;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Live dot */
+  .live-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: #22c55e;
+    border-radius: 50%;
+    margin-right: 6px;
+    animation: pulse 2s infinite;
+    vertical-align: middle;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-label">Gulf War Room</div>
+    <h1>Regional Intelligence Hub</h1>
+    <div class="header-sub" id="ts"></div>
+  </div>
+
+  <!-- Main cards -->
+  <div class="cards">
+    <a class="card" href="gulf-risk-dashboard.html">
+      <div class="card-accent cyan"></div>
+      <div class="card-type">Live Dashboard</div>
+      <h2><span class="live-dot"></span>Regional Risk Map</h2>
+      <p>Interactive Leaflet map. US bases, oil terminals, Iranian military, chokepoints, shipping lanes, attack zones. Updated daily.</p>
+      <div class="card-arrow">Open dashboard &rarr;</div>
+    </a>
+
+    <a class="card" href="gulf-briefing-<TODAY>.html" id="briefing-link">
+      <div class="card-accent amber"></div>
+      <div class="card-type">Daily Briefing</div>
+      <h2>War Room Briefing</h2>
+      <p>Threat level, key metrics, diplomacy, oil infrastructure risk, shipping status, proxy activity, and the 72-hour outlook.</p>
+      <div class="card-arrow">Read today's briefing &rarr;</div>
+    </a>
+  </div>
+
+  <!-- Archive -->
+  <div class="section-label">Briefing Archive</div>
+  <div class="archive-list" id="archive">
+    <a class="archive-item" href="gulf-briefing-2026-03-23.html">
+      <span class="archive-date">2026-03-23</span>
+      <span>Gulf War Room Briefing</span>
+      <span class="archive-tag">DAY 1</span>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>GULF WAR ROOM &mdash; NAVTEC MARINE SERVICES</span>
+    <span id="next-update"></span>
+  </div>
+
+</div>
+
+<script>
+  // Set timestamp
+  const now = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const dateStr = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+  const timeStr = `${pad(now.getHours())}:${pad(now.getMinutes())} GST`;
+
+  document.getElementById('ts').textContent = `Last updated: ${dateStr} ${timeStr}`;
+
+  // Point today's briefing card to correct file
+  document.getElementById('briefing-link').href = `gulf-briefing-${dateStr}.html`;
+
+  // Next update (06:00 GST next day)
+  document.getElementById('next-update').textContent = `NEXT UPDATE: ${dateStr} 06:00 GST`;
+</script>
+</body>
+</html>
