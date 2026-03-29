@@ -1,137 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gulf Risk Dashboard | Live Map | 28 March 2026</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --bg: #0a0e17; --bg2: #0f1420; --bg3: #141926; --border: #1e2535; --amber: #f59e0b; --red: #ef4444; --cyan: #06b6d4; --green: #22c55e; --purple: #a855f7; --blue: #3b82f6; --muted: #64748b; --text: #e2e8f0; --text-dim: #94a3b8; }
-    html, body { height: 100%; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
-    .app { display: flex; height: 100vh; }
-    .sidebar { width: 320px; flex-shrink: 0; background: var(--bg2); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
-    .sidebar-header { padding: 14px 16px; border-bottom: 1px solid var(--border); background: var(--bg3); }
-    .sidebar-title { font-size: 13px; font-weight: 700; color: var(--amber); text-transform: uppercase; letter-spacing: 0.06em; }
-    .sidebar-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
-    .sidebar-day { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--red); margin-top: 4px; font-weight: 700; }
-    .sidebar-body { flex: 1; overflow-y: auto; padding-bottom: 12px; }
-    .section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); padding: 12px 14px 6px; font-weight: 600; }
-    .layer-buttons { padding: 0 12px; display: flex; flex-direction: column; gap: 4px; }
-    .layer-btn { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg3); cursor: pointer; transition: all 0.15s; font-size: 12px; color: var(--text-dim); width: 100%; text-align: left; }
-    .layer-btn.active { border-color: currentColor; color: var(--text); }
-    .layer-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .dot-red { background: #ef4444; } .dot-amber { background: #f59e0b; } .dot-blue { background: #3b82f6; } .dot-purple { background: #a855f7; } .dot-orange { background: #f97316; } .dot-green { background: #22c55e; }
-    .metrics-section { padding: 12px; display: flex; flex-direction: column; gap: 6px; }
-    .metric-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; }
-    .metric-row { display: flex; justify-content: space-between; align-items: center; }
-    .metric-name { font-size: 10px; text-transform: uppercase; color: var(--muted); }
-    .metric-val { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; }
-    .val-red { color: var(--red); } .val-amber { color: var(--amber); } .val-green { color: var(--green); }
-    .metric-note { font-size: 10px; color: var(--muted); margin-top: 3px; }
-    .legend-grid { padding: 0 12px 12px; display: flex; flex-direction: column; gap: 5px; }
-    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-dim); }
-    .legend-swatch { width: 14px; height: 4px; border-radius: 2px; flex-shrink: 0; }
-    .legend-circle { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .timeline-section { padding: 0 12px; }
-    .timeline-item { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
-    .timeline-item:last-child { border-bottom: none; }
-    .timeline-date { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--muted); min-width: 52px; padding-top: 2px; }
-    .timeline-text { font-size: 11px; color: var(--text-dim); line-height: 1.5; }
-    .timeline-text strong { color: var(--text); }
-    #map { flex: 1; }
-    .leaflet-container { background: #070b14; }
-    .leaflet-popup-content-wrapper { background: var(--bg2); border: 1px solid var(--border); color: var(--text); border-radius: 6px; box-shadow: 0 4px 24px rgba(0,0,0,0.6); }
-    .leaflet-popup-tip { background: var(--bg2); }
-    .popup-title { font-weight: 700; font-size: 13px; color: var(--amber); margin-bottom: 4px; }
-    .popup-type { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; }
-    .popup-status { font-size: 12px; color: var(--text-dim); line-height: 1.55; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gulf Regional Risk Dashboard | Live Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --bg: #0a0e17; --bg2: #111827; --bg3: #1a2236; --amber: #f59e0b; --amber-dim: #92600a; --red: #ef4444; --red-dim: #7f1d1d; --cyan: #06b6d4; --green: #22c55e; --yellow: #eab308; --purple: #a855f7; --blue: #3b82f6; --orange: #f97316; --gray: #6b7280; --text: #e5e7eb; --text-dim: #9ca3af; --border: #1f2a40; }
+  html, body { height: 100%; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+  .app { display: flex; flex-direction: column; height: 100vh; }
+  .topbar { background: var(--bg2); border-bottom: 2px solid var(--amber); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; gap: 12px; flex-wrap: wrap; }
+  .topbar-left h1 { font-size: 16px; font-weight: 700; color: var(--amber); letter-spacing: 0.04em; text-transform: uppercase; }
+  .topbar-left p { font-size: 11px; color: var(--text-dim); }
+  .topbar-right { display: flex; align-items: center; gap: 14px; }
+  .threat-pill { background: var(--red-dim); border: 1px solid var(--red); color: var(--red); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.08em; }
+  .day-pill { background: var(--bg3); border: 1px solid var(--border); color: var(--text-dim); font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 4px 10px; border-radius: 20px; }
+  .main { display: flex; flex: 1; overflow: hidden; }
+  .sidebar { width: 300px; background: var(--bg2); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0; }
+  .sidebar-section { border-bottom: 1px solid var(--border); padding: 14px 16px; }
+  .sidebar-section-title { font-size: 10px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+  .layer-btn { display: flex; align-items: center; gap: 8px; width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 5px; padding: 7px 10px; margin-bottom: 5px; cursor: pointer; font-size: 12px; color: var(--text); text-align: left; transition: all 0.15s; }
+  .layer-btn:hover { border-color: var(--amber); }
+  .layer-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .layer-btn .layer-toggle-indicator { margin-left: auto; font-size: 10px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+  .metric-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+  .metric-item:last-child { border-bottom: none; }
+  .metric-item-label { color: var(--text-dim); }
+  .metric-item-val { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; }
+  .val-red { color: var(--red); } .val-amber { color: var(--amber); } .val-green { color: var(--green); }
+  .mini-badge { font-size: 9px; font-family: 'JetBrains Mono', monospace; font-weight: 700; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.04em; }
+  .mb-red { background: #7f1d1d; color: var(--red); } .mb-amber { background: #92600a; color: var(--amber); } .mb-green { background: #14532d; color: var(--green); }
+  .timeline-item { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 11px; }
+  .timeline-item:last-child { border-bottom: none; }
+  .tl-date { font-family: 'JetBrains Mono', monospace; color: var(--amber); min-width: 52px; font-size: 10px; padding-top: 1px; flex-shrink: 0; }
+  .tl-text { color: var(--text-dim); line-height: 1.5; }
+  .tl-text strong { color: var(--text); }
+  #map { flex: 1; background: #0a0e17; }
+  .legend { background: rgba(17,24,39,0.95); border: 1px solid #1f2a40; border-radius: 6px; padding: 10px 12px; font-size: 11px; min-width: 160px; }
+  .legend-title { font-size: 10px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .legend-item { display: flex; align-items: center; gap: 7px; padding: 3px 0; color: #e5e7eb; }
+  .legend-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .legend-line { width: 18px; height: 3px; flex-shrink: 0; border-radius: 2px; }
+  .legend-circle { width: 14px; height: 14px; border-radius: 50%; border: 2px solid; flex-shrink: 0; }
+  .leaflet-popup-content-wrapper { background: #111827; border: 1px solid #1f2a40; border-radius: 8px; color: #e5e7eb; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
+  .leaflet-popup-tip { background: #111827; }
+  .leaflet-popup-content { font-family: 'Inter', sans-serif; font-size: 13px; margin: 10px 14px; }
+  .popup-title { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+  .popup-type { font-size: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 600; padding: 1px 6px; border-radius: 3px; margin-bottom: 8px; display: inline-block; }
+  .popup-status { font-size: 12px; color: #9ca3af; line-height: 1.5; }
+  .pt-military { background: #7f1d1d; color: #ef4444; } .pt-oil { background: #92600a; color: #f59e0b; } .pt-port { background: #1e3a5f; color: #3b82f6; } .pt-iran { background: #3b1d5c; color: #a855f7; } .pt-chokepoint { background: #374151; color: #9ca3af; }
+</style>
 </head>
 <body>
 <div class="app">
-  <div class="sidebar">
-    <div class="sidebar-header">
-      <div class="sidebar-title">Gulf Risk Dashboard</div>
-      <div class="sidebar-sub">Interactive Regional Risk Map</div>
-      <div class="sidebar-day">DAY 29 | 28 MARCH 2026 | 06:00 UTC</div>
-    </div>
-    <div class="sidebar-body">
-      <div class="section-label">Layer Controls</div>
-      <div class="layer-buttons">
-        <button class="layer-btn active" data-layer="usBases" style="color:#ef4444;"><div class="layer-dot dot-red"></div>US Military Bases</button>
-        <button class="layer-btn active" data-layer="oilTerminals" style="color:#f59e0b;"><div class="layer-dot dot-amber"></div>Oil / Gas Terminals</button>
-        <button class="layer-btn active" data-layer="ports" style="color:#3b82f6;"><div class="layer-dot dot-blue"></div>Major Ports</button>
-        <button class="layer-btn active" data-layer="iranMilitary" style="color:#a855f7;"><div class="layer-dot dot-purple"></div>Iranian Military</button>
-        <button class="layer-btn active" data-layer="chokepoints" style="color:#22c55e;"><div class="layer-dot dot-green"></div>Chokepoints</button>
-        <button class="layer-btn active" data-layer="shippingLanes" style="color:#f97316;"><div class="layer-dot dot-orange"></div>Shipping Lanes</button>
-        <button class="layer-btn active" data-layer="pipelines" style="color:#f59e0b;"><div class="layer-dot dot-amber"></div>Pipeline Routes</button>
-        <button class="layer-btn active" data-layer="attackZones" style="color:#ef4444;"><div class="layer-dot dot-red"></div>Attack Zones</button>
-      </div>
-      <div class="section-label">Key Metrics</div>
-      <div class="metrics-section">
-        <div class="metric-card"><div class="metric-row"><span class="metric-name">Brent Crude</span><span class="metric-val val-amber">$112.57 / bbl</span></div><div class="metric-note">+58% since Feb 27 war start ($71/bbl)</div></div>
-        <div class="metric-card"><div class="metric-row"><span class="metric-name">Hormuz Status</span><span class="metric-val val-red">DISRUPTED</span></div><div class="metric-note">Maersk, CMA CGM, Hapag-Lloyd suspended transits</div></div>
-        <div class="metric-card"><div class="metric-row"><span class="metric-name">Ships Attacked</span><span class="metric-val val-red">3+</span></div><div class="metric-note">Tankers struck near Hormuz / Oman coast</div></div>
-        <div class="metric-card"><div class="metric-row"><span class="metric-name">Production Offline</span><span class="metric-val val-amber">~17%</span></div><div class="metric-note">Qatar LNG (force majeure); Ras Tanura back online</div></div>
-        <div class="metric-card"><div class="metric-row"><span class="metric-name">Red Sea Status</span><span class="metric-val val-amber">WATCH</span></div><div class="metric-note">US Bab El-Mandeb warning issued 27 Mar</div></div>
-        <div class="metric-card"><div class="metric-row"><span class="metric-name">Houthi Posture</span><span class="metric-val val-amber">STANDBY</span></div><div class="metric-note">Strategic pause; stated readiness to activate</div></div>
-      </div>
-      <div class="section-label">Legend</div>
-      <div class="legend-grid">
-        <div class="legend-item"><div class="legend-circle" style="background:#ef4444;"></div> US Military Base</div>
-        <div class="legend-item"><div class="legend-circle" style="background:#f59e0b;"></div> Oil / Gas Terminal</div>
-        <div class="legend-item"><div class="legend-circle" style="background:#3b82f6;"></div> Major Port</div>
-        <div class="legend-item"><div class="legend-circle" style="background:#a855f7;"></div> Iranian Military</div>
-        <div class="legend-item"><div class="legend-circle" style="background:#22c55e;"></div> Chokepoint (Open)</div>
-        <div class="legend-item"><div class="legend-circle" style="background:#ef4444;"></div> Chokepoint (Disrupted)</div>
-        <div class="legend-item"><div class="legend-swatch" style="background:#f97316;"></div> Shipping Lane</div>
-        <div class="legend-item"><div class="legend-swatch" style="background:#f59e0b;"></div> Pipeline Route</div>
-        <div class="legend-item"><div class="legend-swatch" style="background:rgba(239,68,68,0.3); height:10px;"></div> Attack Zone</div>
-      </div>
-      <div class="section-label">Threat Timeline</div>
-      <div class="timeline-section">
-        <div class="timeline-item"><div class="timeline-date">28 FEB</div><div class="timeline-text"><strong>D-Day.</strong> US-Israel strike Iran. Khamenei killed. Iran retaliates across GCC. Ras Laffan LNG hit (17% Qatar capacity offline).</div></div>
-        <div class="timeline-item"><div class="timeline-date">1 MAR</div><div class="timeline-text"><strong>GCC meets.</strong> Extraordinary ministerial condemns Iran. Houthis announce intent to resume Red Sea attacks. Zero tankers transit Hormuz.</div></div>
-        <div class="timeline-item"><div class="timeline-date">2 MAR</div><div class="timeline-text"><strong>Ras Tanura hit.</strong> Iranian drones strike Saudi Aramco refinery. Hezbollah begins strikes on Israel. Major shippers suspend Hormuz transits.</div></div>
-        <div class="timeline-item"><div class="timeline-date">8 MAR</div><div class="timeline-text"><strong>$100/bbl breach.</strong> Brent crosses $100 for first time in 4 years.</div></div>
-        <div class="timeline-item"><div class="timeline-date">14 MAR</div><div class="timeline-text"><strong>Kataib commander killed.</strong> Abu Ali al-Askari killed in Baghdad strike.</div></div>
-        <div class="timeline-item"><div class="timeline-date">16 MAR</div><div class="timeline-text"><strong>IDF ground ops, Lebanon.</strong> Israeli ground operations begin in southern Lebanon. 1,000+ killed in Lebanon, 1M displaced.</div></div>
-        <div class="timeline-item"><div class="timeline-date">19 MAR</div><div class="timeline-text"><strong>Kataib ceasefire.</strong> Kataib Hezbollah announces temporary pause on US Embassy Baghdad attacks.</div></div>
-        <div class="timeline-item"><div class="timeline-date">25 MAR</div><div class="timeline-text"><strong>Iran rejects plan.</strong> Iran calls US 15-point ceasefire plan "maximalist, unreasonable." Issues 5-point counter including Hormuz sovereignty demand.</div></div>
-        <div class="timeline-item"><div class="timeline-date">27 MAR</div><div class="timeline-text"><strong>Bab El-Mandeb warning.</strong> US issues formal shipping advisory after Iran signals intent to extend maritime barriers.</div></div>
-        <div class="timeline-item"><div class="timeline-date">28 MAR</div><div class="timeline-text"><strong>Today.</strong> Brent at $112.57/bbl. No ceasefire imminent. Houthis on standby.</div></div>
-      </div>
-    </div>
+  <div class="topbar">
+    <div class="topbar-left"><h1>Gulf Regional Risk Dashboard</h1><p>Live Map | Updated: 29 March 2026, 06:00 UTC | 2026 Iran War, Day 30</p></div>
+    <div class="topbar-right"><span class="threat-pill">CRITICAL</span><span class="day-pill">DAY 30</span></div>
   </div>
-  <div id="map"></div>
+  <div class="main">
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Map Layers</div>
+        <button class="layer-btn active" id="btn-military" onclick="toggleLayer('military')"><div class="layer-dot" style="background:#ef4444;"></div>US Military Bases<span class="layer-toggle-indicator" id="ind-military">ON</span></button>
+        <button class="layer-btn active" id="btn-oil" onclick="toggleLayer('oil')"><div class="layer-dot" style="background:#f59e0b;"></div>Oil/Gas Terminals<span class="layer-toggle-indicator" id="ind-oil">ON</span></button>
+        <button class="layer-btn active" id="btn-ports" onclick="toggleLayer('ports')"><div class="layer-dot" style="background:#3b82f6;"></div>Major Ports<span class="layer-toggle-indicator" id="ind-ports">ON</span></button>
+        <button class="layer-btn active" id="btn-iran" onclick="toggleLayer('iran')"><div class="layer-dot" style="background:#a855f7;"></div>Iranian Military<span class="layer-toggle-indicator" id="ind-iran">ON</span></button>
+        <button class="layer-btn active" id="btn-chokepoints" onclick="toggleLayer('chokepoints')"><div class="layer-dot" style="background:#9ca3af;"></div>Chokepoints<span class="layer-toggle-indicator" id="ind-chokepoints">ON</span></button>
+        <button class="layer-btn active" id="btn-lanes" onclick="toggleLayer('lanes')"><div class="layer-dot" style="background:#f97316;"></div>Shipping Lanes<span class="layer-toggle-indicator" id="ind-lanes">ON</span></button>
+        <button class="layer-btn active" id="btn-pipelines" onclick="toggleLayer('pipelines')"><div class="layer-dot" style="background:#f59e0b;"></div>Pipelines<span class="layer-toggle-indicator" id="ind-pipelines">ON</span></button>
+        <button class="layer-btn active" id="btn-attackzones" onclick="toggleLayer('attackzones')"><div class="layer-dot" style="background:#ef4444;opacity:0.6;"></div>Attack Zones<span class="layer-toggle-indicator" id="ind-attackzones">ON</span></button>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Key Metrics (29 Mar 2026)</div>
+        <div class="metric-item"><span class="metric-item-label">Brent Crude</span><span class="metric-item-val val-amber">$114 /bbl</span></div>
+        <div class="metric-item"><span class="metric-item-label">Hormuz Status</span><span class="mini-badge mb-red">RESTRICTED</span></div>
+        <div class="metric-item"><span class="metric-item-label">Ships Attacked</span><span class="metric-item-val val-red">23+</span></div>
+        <div class="metric-item"><span class="metric-item-label">Production Offline</span><span class="metric-item-val val-red">~10 mb/d</span></div>
+        <div class="metric-item"><span class="metric-item-label">Red Sea Status</span><span class="mini-badge mb-red">ATTACK IMMINENT</span></div>
+        <div class="metric-item"><span class="metric-item-label">Houthi Posture</span><span class="mini-badge mb-red">ESCALATING</span></div>
+        <div class="metric-item"><span class="metric-item-label">Ceasefire Deadline</span><span class="metric-item-val val-amber">6 APR</span></div>
+        <div class="metric-item"><span class="metric-item-label">Ras Tanura</span><span class="mini-badge mb-green">OPERATIONAL</span></div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Legend</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ef4444;"></div> US Military Bases</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;"></div> Oil/Gas Terminals</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div> Major Ports</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#a855f7;"></div> Iranian Military</div>
+        <div class="legend-item"><div class="legend-circle" style="border-color:#ef4444;background:rgba(239,68,68,0.15);"></div> Chokepoint (Restricted)</div>
+        <div class="legend-item"><div class="legend-circle" style="border-color:#22c55e;background:rgba(34,197,94,0.15);"></div> Chokepoint (Open)</div>
+        <div class="legend-item"><div class="legend-line" style="background:#f97316;"></div> Shipping Lane</div>
+        <div class="legend-item"><div class="legend-line" style="background:#f59e0b;"></div> Pipeline Route</div>
+        <div class="legend-item"><div class="legend-circle" style="border-color:#ef4444;background:rgba(239,68,68,0.08);width:18px;height:18px;"></div> Attack Zone</div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Key Events Timeline</div>
+        <div class="timeline-item"><div class="tl-date">28 Feb</div><div class="tl-text"><strong>Operation Epic Fury begins.</strong> US/Israel strikes on Iran. Iranian retaliation strikes GCC states and US bases.</div></div>
+        <div class="timeline-item"><div class="tl-date">1 Mar</div><div class="tl-text"><strong>GCC Emergency Meeting.</strong> Members condemn Iranian attacks, affirm right to respond.</div></div>
+        <div class="timeline-item"><div class="tl-date">2 Mar</div><div class="tl-text"><strong>Ras Tanura hit.</strong> Drone attack; refinery shuts. Hormuz blockade declared.</div></div>
+        <div class="timeline-item"><div class="tl-date">13 Mar</div><div class="tl-text"><strong>Ras Tanura restarts</strong> after 11-day shutdown. 550,000 bpd back online.</div></div>
+        <div class="timeline-item"><div class="tl-date">14 Mar</div><div class="tl-text"><strong>Kataib HZB commander</strong> Abu Ali al-Askari killed in Baghdad strike.</div></div>
+        <div class="timeline-item"><div class="tl-date">19 Mar</div><div class="tl-text"><strong>US strikes Iraqi militia bases.</strong> Kataib HZB declares ceasefire on Embassy. Yanbu attacked, briefly halted.</div></div>
+        <div class="timeline-item"><div class="tl-date">20 Mar</div><div class="tl-text"><strong>Iraq force majeure</strong> on all foreign oilfields. Kuwait refineries hit. ~4.9 mb/d offline.</div></div>
+        <div class="timeline-item"><div class="tl-date">25-27 Mar</div><div class="tl-text"><strong>Iran rejects US ceasefire.</strong> Brent hits $114. Trump extends energy strike pause to 6 Apr.</div></div>
+        <div class="timeline-item"><div class="tl-date">28 Mar</div><div class="tl-text"><strong>Houthis fire missiles at Israel.</strong> Threaten Red Sea shipping resumption imminently.</div></div>
+        <div class="timeline-item"><div class="tl-date">29 Mar</div><div class="tl-text"><strong>TODAY.</strong> Houthi maritime attack expected. OPEC+ meets 5 Apr. US strike pause expires 6 Apr.</div></div>
+      </div>
+    </div>
+    <div id="map"></div>
+  </div>
 </div>
 <script>
-  const map = L.map('map', { center: [25.5, 54.0], zoom: 6 });
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OSM &copy; CARTO', subdomains: 'abcd', maxZoom: 18 }).addTo(map);
-  function marker(lat, lng, color, radius, name, type, status) {
-    return L.circleMarker([lat, lng], { radius, fillColor: color, color, weight: 1.5, opacity: 0.9, fillOpacity: 0.75 })
-      .bindPopup(`<div class="popup-title">${name}</div><div class="popup-type">${type}</div><div class="popup-status">${status}</div>`);
-  }
-  const layers = {};
-  layers.usBases = L.layerGroup([marker(25.1175,51.3148,'#ef4444',8,'Al Udeid Air Base','US Military Base','Primary US air operations hub in Qatar. Central to the current air campaign against Iran.'),marker(24.2480,54.5578,'#ef4444',8,'Al Dhafra Air Base','US Military Base (UAE)','Major US Air Force base in Abu Dhabi. F-22s and ISR assets. UAE hosts expanded US presence.'),marker(26.2041,50.5108,'#ef4444',8,'NSA Bahrain (Fifth Fleet HQ)','US Naval Base','HQ of US Naval Forces Central Command and Fifth Fleet. Coordinating naval escort operations.'),marker(29.3614,47.9543,'#ef4444',8,'Camp Arifjan','US Army Base (Kuwait)','Major US Army logistics hub in Kuwait. Forward staging for ground forces.'),marker(23.9942,45.0625,'#ef4444',8,'Prince Sultan Air Base','US Military Base (Saudi Arabia)','Reopened for US forces. F-35 and air defense assets deployed.'),marker(17.6667,54.0167,'#ef4444',8,'Thumrait Air Base','US Military Base (Oman)','US forces present at Omani base. Oman maintains neutrality.'),marker(11.5500,43.1500,'#ef4444',8,'Camp Lemonnier','US Military Base (Djibouti)','AFRICOM hub. Drone and ISR operations supporting Red Sea and Bab El-Mandeb monitoring.')]).addTo(map);
-  layers.oilTerminals = L.layerGroup([marker(26.6350,50.1550,'#f59e0b',9,'Ras Tanura','Oil Terminal (Saudi Arabia)','Struck by Iranian drones March 2, 2026. Shut down ~1 week; now back online. High-value target.'),marker(25.9125,49.6767,'#f59e0b',9,'Abqaiq (Buqayq)','Oil Processing Facility (Saudi Arabia)','Largest crude stabilization facility in the world. No confirmed strikes as of 28 March 2026. Iranian threat active.'),marker(25.9069,51.5500,'#ef4444',9,'Ras Laffan LNG','LNG Terminal (Qatar)','CRITICAL: Struck Feb 28. 17% of Qatar LNG capacity offline. Force majeure declared.'),marker(24.9167,51.5500,'#f59e0b',7,'Mesaieed Industrial City','Industrial Port (Qatar)','Qatar petrochemical hub. Elevated security posture.'),marker(25.1281,56.3578,'#22c55e',8,'Fujairah Terminal','Oil Terminal (UAE)','OPERATIONAL. Key non-Hormuz export route. Habshan-Fujairah pipeline (1.5M bpd) active.'),marker(24.1100,52.7300,'#22c55e',7,'Ruwais Refinery','Refinery (UAE)','Operational. No confirmed Iranian strikes.'),marker(29.2500,50.3333,'#f59e0b',8,'Kharg Island Terminal','Oil Terminal (Iran)','Primary crude export terminal. Under US/Israeli strike threat. Exports severely curtailed.'),marker(23.6667,58.5400,'#22c55e',7,'Mina al-Fahal','Oil Terminal (Oman)','Operational. Oman neutrality reduces targeting incentive.'),marker(28.9167,48.1500,'#22c55e',7,'Mina Al Ahmadi','Oil Terminal (Kuwait)','Operational. Kuwait under GCC collective defense umbrella.')]).addTo(map);
-  layers.ports = L.layerGroup([marker(25.0657,55.1350,'#3b82f6',7,'Jebel Ali Port','Major Port (UAE)','World largest man-made port. Shipping disruptions from Hormuz crisis reducing throughput.'),marker(25.2854,51.5500,'#3b82f6',6,'Doha Port','Major Port (Qatar)','Qatar main port. Impacted by Ras Laffan disruptions.'),marker(24.4539,54.3773,'#3b82f6',6,'Abu Dhabi / Khalifa Port','Major Port (UAE)','Operational; diverting some cargo from Hormuz-route shipping.'),marker(21.4858,39.1925,'#3b82f6',7,'Jeddah Islamic Port','Major Port (Saudi Arabia)','Red Sea port. Key alternative export route post-Ras Tanura disruption.'),marker(27.1832,56.2660,'#3b82f6',7,'Bandar Abbas','Major Port (Iran)','Adjacent to Hormuz. Commercial traffic severely disrupted.'),marker(12.7797,44.9908,'#3b82f6',6,'Aden Port','Major Port (Yemen)','Under Houthi threat. MARAD advisory in effect.')]).addTo(map);
-  layers.iranMilitary = L.layerGroup([marker(27.1832,56.2660,'#a855f7',8,'Bandar Abbas Naval Base','Iranian Military (IRGCN)','Primary IRGC Navy base. Commands fast-boat and mine-laying assets threatening Hormuz transit.'),marker(26.9500,56.2667,'#a855f7',7,'Qeshm Island Base','Iranian Military (IRGCN)','IRGC Navy staging area. Submarine and fast-boat operations.'),marker(28.9578,50.8388,'#a855f7',7,'Bushehr Naval / Air Complex','Iranian Military + Nuclear','Iranian naval and nuclear facility. Air defense systems present.'),marker(25.6500,57.7667,'#a855f7',7,'Jask Naval Base','Iranian Military (IRGCN)','Expanded IRGC Navy base outside Hormuz. Power projection into Arabian Sea.'),marker(25.8667,55.0333,'#a855f7',6,'Abu Musa Island','Iranian-Occupied Island','Disputed island. IRGC garrison. Overlooks Hormuz shipping lanes.'),marker(26.2333,55.3000,'#a855f7',6,'Greater and Lesser Tunb Islands','Iranian-Occupied Islands','Seized in 1971. IRGC presence. Strategic position astride Hormuz shipping lanes.'),marker(35.6892,51.3890,'#a855f7',7,'Tehran IRGC Command','Iranian Military HQ','IRGC strategic command. Khamenei killed Feb 28; new leadership unconfirmed.')]).addTo(map);
-  layers.chokepoints = L.layerGroup([L.circle([26.5900,56.4300],{radius:45000,color:'#ef4444',fillColor:'#ef4444',fillOpacity:0.08,weight:2,dashArray:'6 4'}).bindPopup('<div class="popup-title">Strait of Hormuz</div><div class="popup-type">Critical Chokepoint | DISRUPTED</div><div class="popup-status">3+ tankers struck. Major shipping lines suspended. GPS jamming active. Largest supply disruption since 1970s.</div>'),L.circle([12.5833,43.3333],{radius:40000,color:'#f59e0b',fillColor:'#f59e0b',fillOpacity:0.07,weight:2,dashArray:'6 4'}).bindPopup('<div class="popup-title">Bab El-Mandeb Strait</div><div class="popup-type">Critical Chokepoint | WATCH</div><div class="popup-status">No Houthi attacks since Oct 2025. US issued formal warning March 27. MARAD advisory 2026-006 in effect.</div>'),L.circle([30.5852,32.2654],{radius:30000,color:'#f59e0b',fillColor:'#f59e0b',fillOpacity:0.06,weight:2,dashArray:'6 4'}).bindPopup('<div class="popup-title">Suez Canal</div><div class="popup-type">Major Canal | REDUCED</div><div class="popup-status">Traffic reduced. Major lines routing via Cape of Good Hope.</div>')]).addTo(map);
-  layers.shippingLanes = L.layerGroup([L.polyline([[24.5,58.5],[25.0,57.5],[26.0,56.8],[26.5,56.4]],{color:'#f97316',weight:2.5,opacity:0.7,dashArray:'8 5'}).bindPopup('<div class="popup-title">Hormuz Inbound Lane</div><div class="popup-type">Shipping Route</div><div class="popup-status">Severely disrupted. Major carriers suspended.</div>'),L.polyline([[26.5,56.4],[26.2,57.0],[25.5,58.0],[24.8,59.0]],{color:'#f97316',weight:2.5,opacity:0.7,dashArray:'8 5'}).bindPopup('<div class="popup-title">Hormuz Outbound Lane</div><div class="popup-type">Shipping Route</div><div class="popup-status">Severely disrupted. Major carriers suspended.</div>'),L.polyline([[29.5,32.5],[27.0,35.0],[22.0,38.5],[18.0,41.5],[14.0,43.0],[12.5,43.3]],{color:'#f97316',weight:2,opacity:0.55,dashArray:'8 5'}).bindPopup('<div class="popup-title">Red Sea Shipping Lane</div><div class="popup-type">Shipping Route</div><div class="popup-status">Most carriers rerouting via Cape of Good Hope. US Bab El-Mandeb warning issued March 27.</div>')]).addTo(map);
-  layers.pipelines = L.layerGroup([L.polyline([[26.6,50.2],[25.5,47.0],[23.5,44.0],[21.5,39.2]],{color:'#f59e0b',weight:2.5,opacity:0.8}).bindPopup('<div class="popup-title">East-West Pipeline (Petroline)</div><div class="popup-type">Saudi Aramco Pipeline</div><div class="popup-status">Operational. Carries Saudi crude to Yanbu, bypassing Hormuz. Capacity ~5M bpd.</div>'),L.polyline([[23.7,54.0],[24.3,55.3],[25.1,56.4]],{color:'#f59e0b',weight:2.5,opacity:0.8}).bindPopup('<div class="popup-title">Habshan-Fujairah Pipeline</div><div class="popup-type">ADNOC / UAE Pipeline</div><div class="popup-status">OPERATIONAL. 1.5M bpd capacity. Under heavy use since Hormuz disruption began.</div>'),L.polyline([[35.5,44.4],[37.0,41.0],[37.5,38.0],[36.8,36.1]],{color:'#f59e0b',weight:2,opacity:0.6}).bindPopup('<div class="popup-title">Kirkuk-Ceyhan Pipeline</div><div class="popup-type">Iraq-Turkey Pipeline</div><div class="popup-status">Flows disrupted by Iraqi militia activity. Militia attacks on Iraqi CTS and INIS (March 21-22) signal growing instability.</div>')]).addTo(map);
-  layers.attackZones = L.layerGroup([L.circle([26.2,56.7],{radius:120000,color:'#ef4444',fillColor:'#ef4444',fillOpacity:0.06,weight:1}).bindPopup('<div class="popup-title">Hormuz Attack Zone</div><div class="popup-type">Active Conflict Zone</div><div class="popup-status">Iranian fast boats, mines, shore-based missiles active. 3+ tankers struck.</div>'),L.circle([26.0,51.0],{radius:500000,color:'#ef4444',fillColor:'#ef4444',fillOpacity:0.04,weight:1,dashArray:'10 6'}).bindPopup('<div class="popup-title">Gulf Conflict Zone</div><div class="popup-type">Active Conflict Zone</div><div class="popup-status">Iranian missile and drone attacks on GCC infrastructure since February 28, 2026.</div>'),L.circle([15.0,43.0],{radius:300000,color:'#f59e0b',fillColor:'#f59e0b',fillOpacity:0.04,weight:1,dashArray:'10 6'}).bindPopup('<div class="popup-title">Red Sea Risk Zone</div><div class="popup-type">Elevated Threat Zone</div><div class="popup-status">Houthi standby posture. US Bab El-Mandeb warning March 27. MARAD 2026-006 active.</div>')]).addTo(map);
-  document.querySelectorAll('.layer-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const layer = layers[btn.dataset.layer];
-      if (!layer) return;
-      if (map.hasLayer(layer)) { map.removeLayer(layer); btn.classList.remove('active'); }
-      else { layer.addTo(map); btn.classList.add('active'); }
-    });
-  });
+var map = L.map('map', { center: [25.5, 54], zoom: 6, zoomControl: true, preferCanvas: true });
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', subdomains: 'abcd', maxZoom: 18 }).addTo(map);
+var layers = { military: L.layerGroup(), oil: L.layerGroup(), ports: L.layerGroup(), iran: L.layerGroup(), chokepoints: L.layerGroup(), lanes: L.layerGroup(), pipelines: L.layerGroup(), attackzones: L.layerGroup() };
+function makeMarker(lat, lng, color, radius) { return L.circleMarker([lat, lng], { radius: radius || 7, fillColor: color, color: color, weight: 2, opacity: 0.9, fillOpacity: 0.8 }); }
+function popup(title, type, typeClass, status) { return '<div class="popup-title">' + title + '</div><div class="popup-type ' + typeClass + '">' + type + '</div><div class="popup-status">' + status + '</div>'; }
+[{name:'Al Udeid Air Base',lat:25.117,lng:51.315,status:'Largest US air base in Middle East. 8,000+ US/coalition troops. Qatar. Operational despite Iranian missile strikes on 28 Feb.'},{name:'Al Dhafra Air Base',lat:24.241,lng:54.548,status:'UAE. Key US Air Force hub. Operational. UAE most hawkish GCC member post-strikes.'},{name:'NSA Bahrain (5th Fleet)',lat:26.215,lng:50.610,status:'US Naval Forces Central Command HQ. 5th Fleet. Critical for Gulf maritime operations and Hormuz monitoring.'},{name:'Camp Arifjan',lat:29.197,lng:47.933,status:'Kuwait. US Army forward staging base. Logistics hub for Gulf operations. Nearby refineries struck 20 Mar.'},{name:'Prince Sultan Air Base',lat:24.062,lng:47.581,status:'Saudi Arabia. Reopened 2019. US Air Force assets. Supports air operations over Gulf region.'},{name:'Thumrait Air Base',lat:17.666,lng:54.025,status:'Oman. US access agreements. Oman acting as primary diplomatic mediator.'},{name:'Camp Lemonnier',lat:11.547,lng:43.145,status:'Djibouti. US/French base. Key for Red Sea/Bab el-Mandeb monitoring and counter-Houthi operations.'}].forEach(function(d){makeMarker(d.lat,d.lng,'#ef4444',8).bindPopup(popup(d.name,'US MILITARY','pt-military',d.status)).addTo(layers.military);});
+[{name:'Ras Tanura Terminal',lat:26.651,lng:50.164,status:'Saudi Aramco. Drone attacked 2 Mar; shut 11 days; RESTARTED 13 Mar. 550,000 bpd. Secondary attack 4 Mar repelled.'},{name:'Abqaiq Processing Facility',lat:25.932,lng:49.669,status:'Saudi Arabia. Most critical oil processing node. NOT yet struck but assessed as top Iranian target. Air defense reinforced.'},{name:'Ras Laffan Industrial City',lat:25.908,lng:51.561,status:'Qatar. World largest LNG complex. 77 million tonnes/yr capacity. On heightened alert. No direct strike confirmed.'},{name:'Mesaieed Industrial Area',lat:24.997,lng:51.561,status:'Qatar. Petrochemical hub. Elevated security posture. No direct strike.'},{name:'Fujairah Oil Terminal',lat:25.127,lng:56.367,status:'UAE. Critical bypass point for oil avoiding Hormuz. Habshan-Fujairah pipeline (1.5 mb/d capacity) now primary UAE export route.'},{name:'Ruwais Refinery',lat:24.107,lng:52.730,status:'UAE. ADNOC refinery, 837,000 bpd capacity. Elevated alert. No direct strike.'},{name:'Kharg Island Terminal',lat:29.245,lng:50.324,status:'IRAN. Primary oil export terminal. Under US/Israeli strike consideration if talks collapse. Iran dispersing to Jask.'},{name:'Mina al-Fahal Terminal',lat:23.629,lng:58.530,status:'Oman. PDO export terminal. Gulf of Oman; outside Hormuz chokepoint. Elevated strategic value. No direct threat.'},{name:'Mina Al Ahmadi',lat:29.084,lng:48.155,status:'Kuwait. Nearby Kuwaiti refineries struck by drones 20 Mar; 400,000 bpd refining disrupted. Partially restored.'}].forEach(function(d){makeMarker(d.lat,d.lng,'#f59e0b',8).bindPopup(popup(d.name,'OIL/GAS TERMINAL','pt-oil',d.status)).addTo(layers.oil);});
+[{name:'Jebel Ali Port',lat:24.997,lng:55.054,status:'Dubai, UAE. 9th busiest container port. Reduced traffic as lines suspend Hormuz transits.'},{name:'Doha Port',lat:25.297,lng:51.558,status:'Qatar. Main commercial port. Reduced capacity.'},{name:'Khalifa Port (Abu Dhabi)',lat:24.803,lng:54.639,status:'UAE. Container and bulk terminal. Operational but reduced throughput.'},{name:'Jeddah Islamic Port',lat:21.489,lng:39.162,status:'Saudi Arabia. Red Sea port, primary non-Hormuz export route.'},{name:'Bandar Abbas Port',lat:27.188,lng:56.277,status:'IRAN. Main Iranian commercial port, adjacent to IRGC naval base. Transit hub for friendly-nation Hormuz passages.'},{name:'Port of Aden',lat:12.788,lng:44.988,status:'Yemen. Houthi-adjacent. Red Sea gateway. Under acute threat as Houthis fired at Israel 28 Mar.'}].forEach(function(d){makeMarker(d.lat,d.lng,'#3b82f6',7).bindPopup(popup(d.name,'MAJOR PORT','pt-port',d.status)).addTo(layers.ports);});
+[{name:'Bandar Abbas Naval Base',lat:27.188,lng:56.277,status:'IRGC Navy HQ. Fast-attack craft, speedboats, mini-subs. Primary Hormuz enforcement.'},{name:'Qeshm Island Facility',lat:26.962,lng:56.142,status:'IRGC naval base and drone/missile storage. Qeshm narrows Hormuz to ~50 km width.'},{name:'Bushehr Nuclear/Naval',lat:28.921,lng:50.830,status:'Bushehr Nuclear Power Plant and adjacent IRGC facility. Under elevated scrutiny.'},{name:'Jask Naval Base',lat:25.642,lng:57.770,status:'Iran expanding Jask as alternative to Bandar Abbas, outside Hormuz. IRGC dispersing naval assets here.'},{name:'Abu Musa Island',lat:25.873,lng:55.033,status:'Disputed island occupied by Iran. IRGC garrison. Close to Fujairah, UAE. Controls eastern Hormuz approaches.'},{name:'Greater/Lesser Tunb Islands',lat:26.244,lng:55.317,status:'Disputed islands seized by Iran in 1971. IRGC forward positions. Control central Hormuz channel.'},{name:'Tehran IRGC Command',lat:35.690,lng:51.388,status:'IRGC-QF HQ coordinates proxy operations. Multiple senior leaders killed in Feb 28 strikes including Khamenei.'}].forEach(function(d){makeMarker(d.lat,d.lng,'#a855f7',8).bindPopup(popup(d.name,'IRANIAN MILITARY','pt-iran',d.status)).addTo(layers.iran);});
+L.circle([26.565,56.580],{radius:65000,color:'#ef4444',fillColor:'#ef4444',fillOpacity:0.15,weight:2,dashArray:'6 4'}).bindPopup(popup('Strait of Hormuz','CHOKEPOINT','pt-chokepoint','RESTRICTED. Iran blocking Western-flagged shipping. Allowing CN, RU, IN, IQ, PK, MY, TH. UN humanitarian exception 27 Mar. Iran threatens mine-laying.')).addTo(layers.chokepoints);
+L.marker([26.565,56.580],{icon:L.divIcon({html:'<div style="font-family:monospace;font-size:10px;font-weight:700;color:#ef4444;background:rgba(10,14,23,0.85);padding:2px 6px;border-radius:3px;border:1px solid #ef4444;white-space:nowrap;">HORMUZ RESTRICTED</div>',className:'',iconAnchor:[60,10]})}).addTo(layers.chokepoints);
+L.circle([12.584,43.335],{radius:40000,color:'#ef4444',fillColor:'#ef4444',fillOpacity:0.15,weight:2,dashArray:'6 4'}).bindPopup(popup('Bab el-Mandeb','CHOKEPOINT','pt-chokepoint','CRITICAL RISK. Physically open but Houthi maritime attack expected imminently. 6-7 mb/d of oil transits daily.')).addTo(layers.chokepoints);
+L.marker([12.584,43.335],{icon:L.divIcon({html:'<div style="font-family:monospace;font-size:10px;font-weight:700;color:#ef4444;background:rgba(10,14,23,0.85);padding:2px 6px;border-radius:3px;border:1px solid #ef4444;white-space:nowrap;">BAB EL-MANDEB CRITICAL</div>',className:'',iconAnchor:[75,10]})}).addTo(layers.chokepoints);
+L.circle([30.510,32.320],{radius:30000,color:'#eab308',fillColor:'#eab308',fillOpacity:0.1,weight:2,dashArray:'6 4'}).bindPopup(popup('Suez Canal','CHOKEPOINT','pt-chokepoint','Reduced transit. Canal open but significant diversion to Cape of Good Hope.')).addTo(layers.chokepoints);
+L.marker([30.510,32.320],{icon:L.divIcon({html:'<div style="font-family:monospace;font-size:10px;font-weight:700;color:#eab308;background:rgba(10,14,23,0.85);padding:2px 6px;border-radius:3px;border:1px solid #eab308;white-space:nowrap;">SUEZ REDUCED</div>',className:'',iconAnchor:[55,10]})}).addTo(layers.chokepoints);
+L.polyline([[26.0,58.0],[26.4,57.0],[26.6,56.5],[26.3,55.8],[26.0,55.0],[25.3,54.0],[24.9,52.5]],{color:'#f97316',weight:2,dashArray:'8 5',opacity:0.7}).bindPopup('<b>Hormuz Outbound Lane</b><br><span style="color:#9ca3af;font-size:12px;">BLOCKED for Western vessels.</span>').addTo(layers.lanes);
+L.polyline([[25.8,57.8],[26.2,56.8],[26.5,56.2],[26.1,55.5],[25.7,54.5],[25.1,53.2]],{color:'#f97316',weight:2,dashArray:'8 5',opacity:0.55}).addTo(layers.lanes);
+L.polyline([[29.9,32.5],[28.0,34.2],[24.0,37.5],[20.0,38.5],[15.5,41.5],[12.5,43.5],[11.6,43.2]],{color:'#f97316',weight:2,dashArray:'8 5',opacity:0.7}).bindPopup('<b>Red Sea Shipping Lane</b><br><span style="color:#9ca3af;font-size:12px;">CRITICAL RISK. Houthis threatening imminent resumption of attacks.</span>').addTo(layers.lanes);
+L.polyline([[25.932,49.669],[25.5,47.5],[24.5,44.5],[23.7,41.5],[23.0,39.7],[21.489,39.162]],{color:'#f59e0b',weight:2.5,opacity:0.7}).bindPopup('<b>East-West Pipeline (Petroline)</b><br><span style="color:#9ca3af;font-size:12px;">Saudi Arabia. Abqaiq to Yanbu. 5 mb/d capacity. Critical Hormuz bypass.</span>').addTo(layers.pipelines);
+L.polyline([[23.6,53.8],[24.0,54.8],[24.5,55.5],[25.127,56.367]],{color:'#f59e0b',weight:2.5,opacity:0.7}).bindPopup('<b>Habshan-Fujairah Pipeline (UAE)</b><br><span style="color:#9ca3af;font-size:12px;">Abu Dhabi to Fujairah. 1.5 mb/d capacity. Operating at maximum capacity.</span>').addTo(layers.pipelines);
+L.polyline([[35.5,44.4],[37.0,42.0],[38.5,39.5],[36.78,36.12]],{color:'#f59e0b',weight:2.5,opacity:0.65}).bindPopup('<b>Kirkuk-Ceyhan Pipeline (Iraq-Turkey)</b><br><span style="color:#9ca3af;font-size:12px;">Iraq to Mediterranean. 800,000 bpd. Iraq force majeure declared 20 Mar.</span>').addTo(layers.pipelines);
+L.circle([26.565,56.580],{radius:120000,color:'#ef4444',fillColor:'#ef4444',fillOpacity:0.05,weight:1,dashArray:'4 6'}).bindPopup('<b>Hormuz Attack Zone</b><br><span style="color:#9ca3af;font-size:12px;">Active IRGC vessel harassment, GPS jamming, seizures. 23+ ships attacked since 28 Feb.</span>').addTo(layers.attackzones);
+L.circle([26.0,52.0],{radius:450000,color:'#ef4444',fillColor:'#ef4444',fillOpacity:0.04,weight:1,dashArray:'4 6'}).bindPopup('<b>Gulf Conflict Zone</b><br><span style="color:#9ca3af;font-size:12px;">Active conflict area. Iranian missile/drone attacks on GCC states since 28 Feb. 10 mb/d offline.</span>').addTo(layers.attackzones);
+L.circle([15.0,42.5],{radius:350000,color:'#ef4444',fillColor:'#ef4444',fillOpacity:0.04,weight:1,dashArray:'4 6'}).bindPopup('<b>Red Sea Threat Zone</b><br><span style="color:#9ca3af;font-size:12px;">Houthis fired at Israel 28 Mar. Threatening imminent commercial shipping attacks.</span>').addTo(layers.attackzones);
+Object.values(layers).forEach(function(lg){lg.addTo(map);});
+var layerState={military:true,oil:true,ports:true,iran:true,chokepoints:true,lanes:true,pipelines:true,attackzones:true};
+var colors={military:'#ef4444',oil:'#f59e0b',ports:'#3b82f6',iran:'#a855f7',chokepoints:'#9ca3af',lanes:'#f97316',pipelines:'#f59e0b',attackzones:'#ef4444'};
+function toggleLayer(name){layerState[name]=!layerState[name];var ind=document.getElementById('ind-'+name);var btn=document.getElementById('btn-'+name);if(layerState[name]){map.addLayer(layers[name]);ind.textContent='ON';ind.style.color=colors[name];btn.style.opacity='1';}else{map.removeLayer(layers[name]);ind.textContent='OFF';ind.style.color='#6b7280';btn.style.opacity='0.55';}}
+var legend=L.control({position:'bottomright'});legend.onAdd=function(){var div=L.DomUtil.create('div','legend');div.innerHTML='<div class="legend-title">Layer Guide</div><div class="legend-item"><div class="legend-dot" style="background:#ef4444;"></div> US Military</div><div class="legend-item"><div class="legend-dot" style="background:#f59e0b;"></div> Oil/Gas Terminal</div><div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div> Port</div><div class="legend-item"><div class="legend-dot" style="background:#a855f7;"></div> Iranian Military</div><div class="legend-item"><span style="display:inline-block;width:18px;height:3px;background:#f97316;margin-right:7px;"></span>Shipping Lane</div><div class="legend-item"><span style="display:inline-block;width:18px;height:3px;background:#f59e0b;margin-right:7px;"></span>Pipeline</div>';return div;};legend.addTo(map);
 </script>
 </body>
 </html>

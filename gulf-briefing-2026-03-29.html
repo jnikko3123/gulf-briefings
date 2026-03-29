@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gulf War-Room Briefing | 29 March 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0e17; --bg2: #111827; --bg3: #1a2236;
+    --amber: #f59e0b; --amber-dim: #92600a;
+    --red: #ef4444; --red-dim: #7f1d1d;
+    --cyan: #06b6d4; --cyan-dim: #164e63;
+    --green: #22c55e; --green-dim: #14532d;
+    --yellow: #eab308; --purple: #a855f7;
+    --gray: #6b7280; --gray2: #374151;
+    --text: #e5e7eb; --text-dim: #9ca3af; --border: #1f2a40;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.6; padding: 0; min-height: 100vh; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .header { background: linear-gradient(135deg, #0d1422 0%, #0a0e17 100%); border-bottom: 2px solid var(--amber); padding: 20px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .header-left h1 { font-size: 22px; font-weight: 700; color: var(--amber); letter-spacing: 0.04em; text-transform: uppercase; }
+  .header-left p { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+  .header-right { text-align: right; }
+  .header-right .date { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; color: var(--text); }
+  .header-right .meta { font-size: 11px; color: var(--text-dim); margin-top: 3px; }
+  .day-badge { display: inline-block; background: var(--red); color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 4px; margin-top: 4px; letter-spacing: 0.06em; }
+  .container { padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
+  .threat-bar { border-radius: 10px; padding: 20px 28px; margin-bottom: 20px; display: flex; align-items: center; gap: 24px; background: linear-gradient(135deg, #2d0d0d 0%, #1a0a0a 100%); border: 1px solid var(--red); flex-wrap: wrap; }
+  .threat-level-label { font-size: 11px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
+  .threat-level-value { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700; color: var(--red); white-space: nowrap; }
+  .threat-divider { width: 2px; height: 48px; background: var(--red-dim); flex-shrink: 0; }
+  .threat-summary { font-size: 13px; color: var(--text-dim); flex: 1; min-width: 200px; }
+  .threat-summary strong { color: var(--text); }
+  .metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+  .metric-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; }
+  .metric-label { font-size: 10px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .metric-value { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; color: var(--amber); }
+  .metric-sub { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+  .metric-card.danger .metric-value { color: var(--red); }
+  .outlook-box { background: var(--bg2); border: 1px solid var(--amber-dim); border-left: 4px solid var(--amber); border-radius: 8px; padding: 18px 22px; margin-bottom: 20px; }
+  .outlook-box h3 { font-size: 11px; font-weight: 700; color: var(--amber); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+  .outlook-box p { font-size: 13px; color: var(--text-dim); line-height: 1.7; }
+  .outlook-box p strong { color: var(--text); }
+  .panel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .panel { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .panel-header { padding: 12px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .panel-icon { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .panel-header h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+  .panel-body { padding: 16px 18px; }
+  .panel-item { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .panel-item:last-child { border-bottom: none; }
+  .panel-item-label { font-size: 11px; font-weight: 600; color: var(--cyan); min-width: 80px; flex-shrink: 0; font-family: 'JetBrains Mono', monospace; }
+  .panel-item-text { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+  .panel-item-text strong { color: var(--text); }
+  .status-badge { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 3px; margin-left: 4px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; }
+  .badge-red { background: var(--red-dim); color: var(--red); }
+  .badge-amber { background: var(--amber-dim); color: var(--amber); }
+  .badge-green { background: var(--green-dim); color: var(--green); }
+  .badge-gray { background: var(--gray2); color: var(--gray); }
+  .badge-purple { background: #3b1d5c; color: var(--purple); }
+  .section-title { font-size: 11px; font-weight: 700; color: var(--amber); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 20px; }
+  thead tr { background: var(--bg3); border-bottom: 1px solid var(--border); }
+  thead th { padding: 10px 14px; text-align: left; font-size: 10px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:hover { background: var(--bg3); }
+  tbody td { padding: 11px 14px; color: var(--text-dim); vertical-align: top; }
+  .country-name { color: var(--cyan); font-weight: 600; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+  .signal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .signal-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .signal-box-header { padding: 11px 16px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--border); }
+  .signal-header { background: #0d2018; color: var(--green); border-top: 3px solid var(--green); }
+  .panic-header { background: #1a0a0a; color: var(--red); border-top: 3px solid var(--red); }
+  .signal-box ul { list-style: none; padding: 12px 16px; }
+  .signal-box ul li { font-size: 12px; color: var(--text-dim); padding: 6px 0 6px 18px; border-bottom: 1px solid var(--border); position: relative; line-height: 1.5; }
+  .signal-box ul li:last-child { border-bottom: none; }
+  .signal-box ul li::before { content: ''; position: absolute; left: 0; top: 13px; width: 8px; height: 8px; border-radius: 50%; }
+  .signal-box.signal ul li::before { background: var(--green); }
+  .signal-box.panic ul li::before { background: var(--red); }
+  .footer { border-top: 1px solid var(--border); padding: 20px 32px; background: var(--bg2); margin-top: 8px; }
+  .footer-title { font-size: 10px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+  .footer-sources { display: flex; flex-wrap: wrap; gap: 8px; }
+  .footer-sources a { font-size: 11px; color: var(--cyan); text-decoration: none; background: var(--bg3); padding: 3px 9px; border-radius: 4px; border: 1px solid var(--border); }
+  .footer-next { font-size: 11px; color: var(--text-dim); margin-top: 14px; }
+  .footer-next strong { color: var(--amber); }
+  .trend { font-size: 14px; }
+  .trend-up { color: var(--red); } .trend-down { color: var(--green); } .trend-flat { color: var(--gray); }
+  @media (max-width: 900px) { .panel-grid { grid-template-columns: 1fr; } .metrics-row { grid-template-columns: 1fr 1fr; } .signal-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-left">
+    <h1>Gulf War-Room Briefing</h1>
+    <p>Regional Risk Intelligence | Operation Epic Fury | 2026 Iran War</p>
+  </div>
+  <div class="header-right">
+    <div class="date mono">29 MARCH 2026</div>
+    <div class="meta">Generated: 06:00 UTC | Next: 06:00 UTC 30 Mar</div>
+    <div class="day-badge">DAY 30 OF CONFLICT</div>
+  </div>
+</div>
+<div class="container">
+  <div class="threat-bar">
+    <div>
+      <div class="threat-level-label">Overall Assessment</div>
+      <div class="threat-level-value">CRITICAL</div>
+    </div>
+    <div class="threat-divider"></div>
+    <div class="threat-summary">
+      <strong>The 2026 Iran war enters its most dangerous phase yet.</strong> The Strait of Hormuz remains effectively closed to Western-flagged shipping, with Brent crude at $114/bbl. Houthis fired their first missiles at Israel on 28 March, triggering near-certain resumption of Red Sea attacks within 24-72 hours. US-Iran ceasefire talks remain deadlocked; Trump's pause on energy infrastructure strikes expires 6 April. The window for a negotiated halt is narrowing fast.
+    </div>
+  </div>
+  <div class="metrics-row">
+    <div class="metric-card danger"><div class="metric-label">Brent Crude</div><div class="metric-value">$114</div><div class="metric-sub">Per barrel (27 Mar close). Peak $119.80 on 8 Mar.</div></div>
+    <div class="metric-card danger"><div class="metric-label">Hormuz Transit</div><div class="metric-value">RESTRICTED</div><div class="metric-sub">Open to CN, RU, IN, IQ, PK, MY, TH only. All others blocked.</div></div>
+    <div class="metric-card danger"><div class="metric-label">Ships Attacked</div><div class="metric-value">23+</div><div class="metric-sub">Confirmed incidents in Hormuz zone since 28 Feb.</div></div>
+    <div class="metric-card danger"><div class="metric-label">Gulf Production Offline</div><div class="metric-value">~10 mb/d</div><div class="metric-sub">Down from ~20 mb/d pre-war. Iraq declared force majeure 20 Mar.</div></div>
+  </div>
+  <div class="outlook-box">
+    <h3>72-Hour Escalation Outlook</h3>
+    <p>The most immediate risk is <strong>Houthi resumption of Red Sea commercial shipping attacks</strong>. Following their 28 March missile barrage on Israel, Houthi officials told the Associated Press that the first maritime strike could come imminently. If confirmed, Bab el-Mandeb closes as a bypass route for Gulf oil, compounding the Hormuz blockade. Simultaneously, Trump's energy infrastructure strike pause expires <strong>6 April</strong>, and Iran's Defence Council has warned that any strike on Iranian coastal territory triggers <strong>mine-laying across all Gulf sea lanes</strong>, a step that would extend disruption far beyond the Hormuz chokepoint. Watch the April 5 OPEC+ emergency session for any emergency production ceiling adjustment. Kataib Hezbollah's conditional ceasefire on the US Embassy in Baghdad is fragile; any perceived violation could restart drone strikes and pull Iraq deeper into the conflict, directly threatening Kirkuk-Ceyhan pipeline flows. Oman is the sole active diplomatic back-channel; any Muscat announcement this week signals the last viable off-ramp before further escalation.</p>
+  </div>
+  <div class="panel-grid">
+    <div class="panel">
+      <div class="panel-header"><div class="panel-icon" style="background:var(--cyan);"></div><h3 style="color:var(--cyan);">Diplomacy &amp; Leader Messaging</h3></div>
+      <div class="panel-body">
+        <div class="panel-item"><div class="panel-item-label">IRAN</div><div class="panel-item-text">Rejected US 15-point ceasefire plan. Presented five counter-conditions including <strong>reparations and formal Hormuz sovereignty recognition</strong>. FM Araghchi allowing select nations through strait. Iran denies direct talks but exchanges messages via intermediaries. <span class="status-badge badge-red">NO DEAL</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">OMAN</div><div class="panel-item-text">Acting as primary mediator. FM stated <strong>"the door to diplomacy remains open."</strong> Oman's position: earliest possible end to hostilities serves both US and Iranian national interests. Sole GCC state not calling for continued strikes. <span class="status-badge badge-amber">MEDIATING</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">UAE</div><div class="panel-item-text">Strongest GCC voice calling for continued US strikes against Iran. Was struck by Iranian missiles on 28 Feb. Condemns "heinous attacks," affirms right to respond. Aligns closely with US military posture. <span class="status-badge badge-red">HAWKISH</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">SAUDI</div><div class="panel-item-text">Condemned Iranian attacks on GCC territory. Ras Tanura refinery restarted 13 Mar after drone strike. <strong>Yanbu attacked 19 Mar</strong>, briefly halted, now resumed. Cautious on timeline for continued strikes. <span class="status-badge badge-amber">CAUTIOUS</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">QATAR</div><div class="panel-item-text">Struck by Iranian missiles on 28 Feb; Al Udeid Air Base (US) remains operational. Supports GCC collective defence statement. Ras Laffan LNG complex on heightened security footing. <span class="status-badge badge-amber">HEDGING</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">US/TRUMP</div><div class="panel-item-text">Envoy Witkoff delivered 15-point action list. Extended pause on Iran energy infrastructure strikes to <strong>6 April</strong>. Says ceasefire talks are "going very well." US considering taking over Strait of Hormuz operationally. <span class="status-badge badge-amber">NEGOTIATING</span></div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><div class="panel-icon" style="background:var(--amber);"></div><h3 style="color:var(--amber);">Oil Infrastructure Risk</h3></div>
+      <div class="panel-body">
+        <div class="panel-item"><div class="panel-item-label">RAS TANURA</div><div class="panel-item-text">Struck by Iranian drones 2 Mar; both intercepted but debris caused fire. Shut 2-13 Mar (550,000 bpd offline). <strong>Restarted 13 Mar</strong>, operating normally. Secondary attack attempt reported 4 Mar, repelled. <span class="status-badge badge-green">OPERATIONAL</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">ABQAIQ</div><div class="panel-item-text"><strong>Not yet directly struck</strong>, but assessed as Iran's highest-value target. Entry point for Saudi East-West Pipeline. Strike would take 5-10 mb/d of processing capacity offline. Air defense reinforced. <span class="status-badge badge-amber">AT RISK</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">YANBU</div><div class="panel-item-text">Attacked 19 Mar. Loadings briefly halted, then resumed. Serves as Red Sea export terminal for East-West Pipeline. Critical if Hormuz remains shut. <span class="status-badge badge-green">RESUMED</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">RAS LAFFAN</div><div class="panel-item-text">Qatar's LNG hub on heightened alert. No direct strike confirmed. Handles ~77 million tonnes/yr of LNG exports; any outage would spike global gas prices. <span class="status-badge badge-amber">ELEVATED ALERT</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">KUWAIT REF.</div><div class="panel-item-text">Two Kuwaiti refineries struck by drones 20 Mar; ~400,000 bpd refining capacity temporarily disrupted. Partial restart confirmed. Iraq declared force majeure on all foreign oilfields 20 Mar (4.5 mb/d). <span class="status-badge badge-amber">PARTIAL</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">KHARG ISLAND</div><div class="panel-item-text">Iran's primary oil export terminal in the Gulf. Under US/Israeli strike consideration if talks collapse. Iran reportedly dispersing export operations to Jask and other terminals. <span class="status-badge badge-red">STRIKE TARGET</span></div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><div class="panel-icon" style="background:var(--red);"></div><h3 style="color:var(--red);">Shipping &amp; Chokepoints</h3></div>
+      <div class="panel-body">
+        <div class="panel-item"><div class="panel-item-label">HORMUZ</div><div class="panel-item-text"><strong>Effectively closed to Western shipping.</strong> Iran allows CN, RU, IN, IQ, PK, MY, TH flagged vessels. UN-negotiated humanitarian and fertilizer shipments allowed from 27 Mar. Maersk, CMA CGM, Hapag-Lloyd all suspended transits. GPS jamming reported. Iran threatens mine-laying if coastal territory struck. <span class="status-badge badge-red">CLOSED (PARTIAL)</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">BAB AL-MANDEB</div><div class="panel-item-text">Currently open but under acute threat. <strong>6-7 mb/d of oil</strong> and major Asia-Europe container flows transit daily. Houthi missile launch on Israel (28 Mar) signals imminent restart of Red Sea attacks. Shipping firms already rerouting via Cape of Good Hope. <span class="status-badge badge-red">CRITICAL RISK</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">RED SEA</div><div class="panel-item-text">Houthis held attack pause since late Feb. That pause ended with 28 Mar missile barrage on Israel. AP reports Houthis plan first maritime strike "imminently." Western shipping companies rerouting pre-emptively. <span class="status-badge badge-red">ATTACK IMMINENT</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">SUEZ CANAL</div><div class="panel-item-text">Canal itself remains open but reduced traffic as ships divert via Cape of Good Hope. If Red Sea attacks resume at 2024-25 intensity, Suez becomes functionally unusable for Western-flagged tonnage again. <span class="status-badge badge-amber">REDUCED TRANSIT</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">SHIPPING COS.</div><div class="panel-item-text">Maersk, CMA CGM, Hapag-Lloyd: Hormuz suspended. MSC and others avoiding Red Sea pre-emptively. Cape of Good Hope adds 10-14 days and $1-2M per voyage. War risk insurance premiums at multi-year highs. <span class="status-badge badge-red">DIVERTED</span></div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-header"><div class="panel-icon" style="background:var(--purple);"></div><h3 style="color:var(--purple);">Proxy &amp; Militia Activity</h3></div>
+      <div class="panel-body">
+        <div class="panel-item"><div class="panel-item-label">HOUTHIS</div><div class="panel-item-text">Held attack pause for ~1 month. <strong>Fired barrage of missiles at Israel 28 Mar</strong>, their first strike since the war began. Now threatening to resume commercial shipping attacks in Red Sea. AP: first maritime strike could come imminently. <span class="status-badge badge-red">ESCALATING</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">KATAIB HZB</div><div class="panel-item-text">Iraqi Shiite militia joined the war with drone strikes. Attacked US Embassy in Baghdad 17-18 Mar, causing damage. IRGC-QF advisors reportedly coordinating. Senior commander Abu Ali al-Askari killed in Baghdad strike 14 Mar. <strong>Temporary ceasefire on Embassy declared 19 Mar</strong>, conditional, holding. <span class="status-badge badge-amber">CEASEFIRE (FRAGILE)</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">IRI (IRAQ)</div><div class="panel-item-text">Islamic Resistance in Iraq claimed 16 ops 28 Feb, 23 ops 1 Mar, 28 ops 2 Mar. US strikes hit militia bases in Baghdad, Salah al Din, Nineveh on 19 Mar. Baghdad under pressure from Washington to rein in proxies. <span class="status-badge badge-amber">ACTIVE/DEGRADED</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">HEZBOLLAH</div><div class="panel-item-text">Lebanon-based Hezbollah has not formally entered the conflict. Assessed as holding back while evaluating Iran's military position. Rocket fire from south Lebanon at low levels but no major escalation. <span class="status-badge badge-amber">WATCHING</span></div></div>
+        <div class="panel-item"><div class="panel-item-label">IRGC NAVY</div><div class="panel-item-text">IRGC conducting vessel seizures and harassment in Hormuz zone. Deployed fast-attack craft from Bandar Abbas, Qeshm, and Jask. Mining threat issued as deterrent against strikes on coastal territory. <span class="status-badge badge-red">ACTIVE</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="section-title">Country Risk Matrix</div>
+  <table>
+    <thead><tr><th>Country</th><th>Threat Level</th><th>Key Exposure</th><th>Current Posture</th><th>72h Trend</th></tr></thead>
+    <tbody>
+      <tr><td><span class="country-name">SAUDI ARABIA</span></td><td><span class="status-badge badge-red">ELEVATED</span></td><td>Ras Tanura, Abqaiq, Yanbu terminal; Red Sea exports critical with Hormuz closed</td><td>Condemned Iranian attacks. Military on high alert. Supporting US coalition. Economy exposed to prolonged disruption.</td><td><span class="trend trend-flat">&#8594;</span> Stable</td></tr>
+      <tr><td><span class="country-name">IRAN</span></td><td><span class="status-badge badge-red">CRITICAL</span></td><td>Nuclear sites struck; military leadership degraded; Kharg Island targeted; economy under extreme pressure</td><td>Defiant. Hormuz blockade as leverage. Rejected US ceasefire. Threatening mines. Allowing friendly nations transit.</td><td><span class="trend trend-up">&#8593;</span> Escalating</td></tr>
+      <tr><td><span class="country-name">OMAN</span></td><td><span class="status-badge badge-amber">WATCH</span></td><td>Mina al-Fahal terminal; Gulf of Oman shipping lanes; Thumrait base (US presence)</td><td>Active diplomatic mediation. Struck by Iranian missiles 28 Feb. Only GCC state calling for immediate ceasefire.</td><td><span class="trend trend-flat">&#8594;</span> Stable</td></tr>
+      <tr><td><span class="country-name">QATAR</span></td><td><span class="status-badge badge-red">ELEVATED</span></td><td>Ras Laffan LNG; Al Udeid Air Base (8,000+ US troops); global LNG contracts at risk</td><td>Struck on 28 Feb. Al Udeid operational. Hedging on war duration. Supporting GCC collective defence.</td><td><span class="trend trend-flat">&#8594;</span> Stable</td></tr>
+      <tr><td><span class="country-name">UAE</span></td><td><span class="status-badge badge-red">ELEVATED</span></td><td>Fujairah terminal; Jebel Ali port; Al Dhafra Air Base; Habshan-Fujairah pipeline bypass</td><td>Struck on 28 Feb. Most hawkish GCC stance. Al Dhafra operational. Fujairah pipeline bypass route active.</td><td><span class="trend trend-up">&#8593;</span> Vigilant</td></tr>
+    </tbody>
+  </table>
+  <div class="section-title">Signal vs. Noise</div>
+  <div class="signal-grid">
+    <div class="signal-box signal">
+      <div class="signal-box-header signal-header">ACTIONABLE SIGNALS</div>
+      <ul>
+        <li>Iran allowing humanitarian and fertilizer shipments through Hormuz (UN brokered, 27 Mar): signals partial diplomatic flexibility and a potential framework for broader reopening.</li>
+        <li>Trump extending energy strike pause to 6 April: active negotiations are real; a deal remains possible before that deadline.</li>
+        <li>Oman FM active in back-channel communications: Muscat has historically delivered US-Iran breakthroughs; any sudden Oman travel by US envoy is a leading indicator of progress.</li>
+        <li>Ras Tanura and Yanbu both operational: Saudi core export capacity is intact; Abqaiq not yet struck, meaning maximum disruption scenario has not materialized.</li>
+        <li>Kataib Hezbollah ceasefire on US Embassy holding since 19 Mar: reduces probability of direct US-Iraq escalation in near term.</li>
+        <li>OPEC+ emergency session 5 April: any decision to waive production ceilings would moderate price pressure and reduce economic incentive for Iranian escalation.</li>
+      </ul>
+    </div>
+    <div class="signal-box panic">
+      <div class="signal-box-header panic-header">NOISE / DO NOT OVERREACT</div>
+      <ul>
+        <li>Daily Houthi rhetoric about joining the war: the 28 Mar missile launch is real, but Houthi leadership has not yet issued a formal maritime attack order; wait for confirmed ship strikes before pricing in full Red Sea closure.</li>
+        <li>Iranian mine-laying threat: a deterrent posture, not an imminent operational act; mine deployment requires coastal access that US naval forces are actively contesting.</li>
+        <li>Reports of Abqaiq being "next target": Iran has threatened Abqaiq repeatedly without striking; its value as a deterrent threat may exceed its value as an actual target.</li>
+        <li>Trump "considering taking over the Strait of Hormuz": negotiating leverage statement, not an operational order; no CENTCOM movement toward Hormuz seizure confirmed.</li>
+        <li>$120/bbl headline risk: oil touched $119.80 on 8 Mar and pulled back; current $114 reflects war premium, not a supply-destruction scenario where Abqaiq and Ras Laffan are both offline simultaneously.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <div class="footer-title">Sources</div>
+  <div class="footer-sources">
+    <a href="https://www.aljazeera.com" target="_blank">Al Jazeera</a>
+    <a href="https://carnegieendowment.org" target="_blank">Carnegie Endowment</a>
+    <a href="https://www.gcc-sg.org" target="_blank">GCC Secretariat</a>
+    <a href="https://www.thenationalnews.com" target="_blank">The National</a>
+    <a href="https://www.atlanticcouncil.org" target="_blank">Atlantic Council</a>
+    <a href="https://en.wikipedia.org/wiki/2026_Strait_of_Hormuz_crisis" target="_blank">Wikipedia: Hormuz Crisis</a>
+    <a href="https://www.usnews.com" target="_blank">US News / AP</a>
+    <a href="https://www.washingtonpost.com" target="_blank">Washington Post</a>
+    <a href="https://fortune.com" target="_blank">Fortune</a>
+    <a href="https://www.cnbc.com" target="_blank">CNBC</a>
+    <a href="https://www.npr.org" target="_blank">NPR</a>
+    <a href="https://www.longwarjournal.org" target="_blank">Long War Journal</a>
+    <a href="https://foreignpolicy.com" target="_blank">Foreign Policy</a>
+    <a href="https://en.wikipedia.org/wiki/2026_Iran_war" target="_blank">Wikipedia: 2026 Iran War</a>
+    <a href="https://www.bloomberg.com" target="_blank">Bloomberg</a>
+  </div>
+  <div class="footer-next"><strong>Next briefing:</strong> 30 March 2026, 06:00 UTC &nbsp;|&nbsp; Conflict began: 28 February 2026 &nbsp;|&nbsp; Day 30 of Operation Epic Fury</div>
+</div>
+</body>
+</html>
